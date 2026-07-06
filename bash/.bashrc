@@ -133,10 +133,22 @@ unset __conda_setup
 
 export HTTP_PROXY="http://127.0.0.1:7890"
 export HTTPS_PROXY="http://127.0.0.1:7890"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 alias stm32='~/STM32CubeMX/STM32CubeMX'
 alias update='sudo apt update'
 alias upgrade='sudo apt upgrade'
+alias cls='clear'
+
+# below is yazi config
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  command rm -f -- "$tmp"
+}
 
 # below is starship launch config#
 eval "$(starship init bash)"
